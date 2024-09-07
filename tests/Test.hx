@@ -5,6 +5,7 @@ import atlas.ColorTests;
 import atlas.ConfigTests;
 import atlas.ImageTests;
 import atlas.PackerTests;
+import atlas.RectangleTests;
 import atlas.SaveTests;
 
 import shaders.TranspilerTests;
@@ -22,6 +23,7 @@ class Test {
     runner.addCase(new ConfigTests());
     runner.addCase(new ImageTests());
     runner.addCase(new PackerTests());
+    runner.addCase(new RectangleTests());
     runner.addCase(new SaveTests());
 
     runner.addCase(new TranspilerTests());

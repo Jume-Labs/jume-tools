@@ -1,13 +1,5 @@
 package atlas;
 
-typedef RectangleParams = {
-  var x: Int;
-  var y: Int;
-  var width: Int;
-  var height: Int;
-  var ?name: String;
-}
-
 /**
  * Rectangle class.
  */
@@ -45,12 +37,13 @@ class Rectangle {
    * @param height The height.
    * @param name Optional filename.
    */
-  public function new(params: RectangleParams) {
-    x = params.x;
-    y = params.y;
-    width = params.width;
-    height = params.height;
-    name = params.name ?? '';
+  @SuppressWarnings('checkstyle:ParameterNumber')
+  public function new(x: Int, y: Int, width: Int, height: Int, name = '') {
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
+    this.name = name;
   }
 
   /**
@@ -58,13 +51,7 @@ class Rectangle {
    * @return The new rectangle.
    */
   public function clone(): Rectangle {
-    return new Rectangle({
-      x: x,
-      y: y,
-      width: width,
-      height: height,
-      name: name
-    });
+    return new Rectangle(x, y, width, height, name);
   }
 
   /**

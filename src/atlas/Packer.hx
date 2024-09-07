@@ -183,12 +183,7 @@ class Packer {
       boundsWidth = maxWidth;
     }
 
-    bounds = new Rectangle({
-      x: 0,
-      y: 0,
-      width: boundsWidth,
-      height: boundsHeight
-    });
+    bounds = new Rectangle(0, 0, boundsWidth, boundsHeight);
   }
 
   /**
@@ -280,8 +275,7 @@ class Packer {
 
   /**
    * Find an empty spot for the rectangle as much left as possible.
-   * @param startColumn The column to start checking.
-   * @param startRow The row to start checking.
+   * @param start The start row and column.
    * @param rectangle The rectangle to place.
    * @return True if the rectangle got placed.
    */
@@ -341,7 +335,10 @@ class Packer {
 
   /**
    * Insert a rectangle into the grid.
-   * @param props The insert properties
+   * @param total The total width and height in pixels.
+   * @param start The start row and column.
+   * @param end The end row and column.
+   * @param rectangle The current image rectangle.
    */
   function insertRect(total: Size, start: Position, end: Position, rectangle: Rectangle) {
     final widthLeft = total.width - rectangle.width;

@@ -1,7 +1,7 @@
 package atlas;
 
-import atlas.AtlasConfig.setDefaultConfigValues;
 import atlas.AtlasConfig.AtlasList;
+import atlas.AtlasConfig.setDefaultConfigValues;
 
 import haxe.io.Path;
 
@@ -147,13 +147,7 @@ class Atlas {
       // Load the image and create the rectangle.
       final image = Image.fromFile(path.fullPath, config.trimmed, config.extrude);
       images[name] = image;
-      rectangles.push(new Rectangle({
-        x: 0,
-        y: 0,
-        width: image.width,
-        height: image.height,
-        name: name
-      }));
+      rectangles.push(new Rectangle(0, 0, image.width, image.height, name));
     }
 
     if (duplicates) {
@@ -180,7 +174,7 @@ class Atlas {
     }
 
     // Create the final blank image with the correct size.
-    packedImage = new Image({ size: { width: packer.smallestBounds.width, height: packer.smallestBounds.height } });
+    packedImage = new Image({ width: packer.smallestBounds.width, height: packer.smallestBounds.height });
 
     // Add all images into the final image.
     for (rect in packer.smallestLayout) {

@@ -4,13 +4,6 @@ import haxe.io.Bytes;
 
 import sys.io.File;
 
-typedef ImageParams = {
-  var size: Size;
-  var ?bytes: Bytes;
-  var ?trim: Bool;
-  var ?extrude: Int;
-}
-
 /**
  * This class holds image data and can manipulate it.
  */
@@ -56,9 +49,9 @@ class Image {
   public var sourceHeight(default, null): Int;
 
   /**
-   * The image bytes.
+   * The image data.
    */
-  var bytes: Bytes;
+  var data: Bytes;
 
   /**
    * The amount of bytes per pixel.
@@ -80,33 +73,31 @@ class Image {
     var header = format.png.Tools.getHeader(data);
 
     return new Image({
-      size: {
-        width: header.width,
-        height: header.height
-      },
-      bytes: pixelData,
-      trim: trim,
-      extrude: extrude
-    });
+      width: header.width,
+      height: header.height
+    }, pixelData, trim, extrude);
   }
 
   /**
-   * Create a new image instance.
-   * @param params The image parameters.
+   * Create a new Image instance.
+   * @param size The width and height of the image in pixels.
+   * @param data Optional image data. 
+   * @param trim If true remove transparent borders.
+   * @param extrude The amount of pixels to extrude from the edges.
    */
-  public function new(params: ImageParams) {
-    width = params.size.width;
-    height = params.size.height;
+  public function new(size: Size, ?data: Bytes, trim = false, extrude = 0) {
+    width = size.width;
+    height = size.height;
     sourceWidth = width;
     sourceHeight = height;
-    trimmed = params.trim ?? false;
-    extrude = params.extrude ?? 0;
+    trimmed = trim;
+    this.extrude = extrude;
 
-    bytes = Bytes.alloc(width * height * stride);
-    if (params.bytes == null) {
-      bytes.fill(0, width * height * stride, 0);
+    this.data = Bytes.alloc(width * height * stride);
+    if (data == null) {
+      this.data.fill(0, width * height * stride, 0);
     } else {
-      bytes.blit(0, params.bytes, 0, params.bytes.length);
+      this.data.blit(0, data, 0, data.length);
       if (trimmed) {
         trimTransparentPixels();
       }
@@ -136,7 +127,7 @@ class Image {
    * Return the image pixels in bytes.
    */
   public function getPixels(): Bytes {
-    return bytes;
+    return data;
   }
 
   /**
@@ -148,7 +139,7 @@ class Image {
   public function getPixel(x: Int, y: Int): Color {
     var start = (y * width + x) * stride;
 
-    return return new Color(bytes.get(start), bytes.get(start + 1), bytes.get(start + 2), bytes.get(start + 3));
+    return return new Color(data.get(start), data.get(start + 1), data.get(start + 2), data.get(start + 3));
   }
 
   /**
@@ -159,10 +150,10 @@ class Image {
    */
   public function setPixel(x: Int, y: Int, color: Color) {
     var start = (y * width + x) * stride;
-    bytes.set(start, color.a);
-    bytes.set(start + 1, color.r);
-    bytes.set(start + 2, color.g);
-    bytes.set(start + 3, color.b);
+    data.set(start, color.a);
+    data.set(start + 1, color.r);
+    data.set(start + 2, color.g);
+    data.set(start + 3, color.b);
   }
 
   /**
@@ -170,15 +161,15 @@ class Image {
    * @param amount The amount of pixels to extrude out.
    */
   function extrudeEdges(amount: Int) {
-    var original = new Image({ size: { width: width, height: height }, bytes: bytes });
+    var original = new Image({ width: width, height: height }, data);
 
     // Total width and height adjusted by the amount to extrude on both sides.
     width += amount * 2;
     height += amount * 2;
 
     var size = width * height * stride;
-    bytes = Bytes.alloc(size);
-    bytes.fill(0, stride, 0);
+    data = Bytes.alloc(size);
+    data.fill(0, stride, 0);
     insertImage(original, amount, amount);
     var color: Color;
     for (y in amount...original.height + amount) {
@@ -215,7 +206,7 @@ class Image {
    * Moves in from each side until a non transparent pixel is found.
    */
   function trimTransparentPixels() {
-    var temp = new Image({ size: { width: width, height: height }, bytes: bytes });
+    var temp = new Image({ width: width, height: height }, data);
 
     var leftOffset = 0;
     var rightOffset = 0;
@@ -261,8 +252,8 @@ class Image {
     width = temp.width - leftOffset - rightOffset;
     height = temp.height - topOffset - bottomOffset;
 
-    // allocate bytes with the new size.
-    bytes = Bytes.alloc(width * height * stride);
+    // allocate the image data with the new size.
+    data = Bytes.alloc(width * height * stride);
     var pos = 0;
     var color: Color;
 
@@ -270,10 +261,10 @@ class Image {
     for (y in topOffset...topOffset + height) {
       for (x in leftOffset...leftOffset + width) {
         color = temp.getPixel(x, y);
-        bytes.set(pos, color.a);
-        bytes.set(pos + 1, color.r);
-        bytes.set(pos + 2, color.g);
-        bytes.set(pos + 3, color.b);
+        data.set(pos, color.a);
+        data.set(pos + 1, color.r);
+        data.set(pos + 2, color.g);
+        data.set(pos + 3, color.b);
         pos += stride;
       }
     }
