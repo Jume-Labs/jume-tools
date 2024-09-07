@@ -1,0 +1,6 @@
+-lib format:3.6.0
+-lib haxetoml:git:git@github.com/codescapade/haxetoml#2fbd78a
+-cp src
+--main Run
+
+--run Run

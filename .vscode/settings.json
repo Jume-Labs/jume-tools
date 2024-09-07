@@ -1,0 +1,12 @@
+{
+  "haxe.configurations": [
+    ["hxml/run.hxml"],
+    ["hxml/test.hxml"]
+  ],
+  "haxeTestExplorer.testCommand": [
+    "${haxe}",
+    "hxml/test.hxml",
+    "-lib",
+    "test-adapter"
+  ]
+}
