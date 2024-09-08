@@ -5,6 +5,7 @@ import haxe.io.Path;
 
 import sys.io.File;
 
+
 /**
  * Helper class to save the image and json data of the atlas.
  */
@@ -15,7 +16,8 @@ class Save {
    * @param saveFolder The folder to save to.
    * @param atlas The created atlas.
    */
-  public static function atlasImage(name: String, saveFolder: String, atlas: Atlas) {
+  public static function atlasImage(name: String, saveFolder: String, atlas: Atlas)
+{
     final bytes = atlas.packedImage.getPixels();
     final saveData = format.png.Tools.build32ARGB(atlas.packedImage.width, atlas.packedImage.height, bytes);
     final path = Path.join([saveFolder, '${name}.png']);
