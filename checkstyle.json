@@ -32,19 +32,19 @@
         "option": "eol",
         "ignoreEmptySingleline": true,
         "tokens": [
-            "CLASS_DEF",
-            "ENUM_DEF",
-            "ABSTRACT_DEF",
-            "TYPEDEF_DEF",
-            "INTERFACE_DEF",
-            "FUNCTION",
-            "FOR",
-            "IF",
-            "WHILE",
-            "SWITCH",
-            "TRY",
-            "CATCH",
-            "ARRAY_COMPREHENSION"
+          "CLASS_DEF",
+          "ENUM_DEF",
+          "ABSTRACT_DEF",
+          "TYPEDEF_DEF",
+          "INTERFACE_DEF",
+          "FUNCTION",
+          "FOR",
+          "IF",
+          "WHILE",
+          "SWITCH",
+          "TRY",
+          "CATCH",
+          "ARRAY_COMPREHENSION"
         ]
       }
     },
@@ -112,13 +112,7 @@
       "type": "NeedBraces",
       "props": {
         "allowSingleLineStatement": true,
-        "tokens": [
-          "FOR",
-          "IF",
-          "ELSE_IF",
-          "WHILE",
-          "DO_WHILE"
-        ],
+        "tokens": ["FOR", "IF", "ELSE_IF", "WHILE", "DO_WHILE"],
         "severity": "ERROR"
       }
     },
@@ -134,24 +128,30 @@
     {
       "type": "NullableParameter",
       "props": {
-          "option": "questionMark",
-          "severity": "ERROR"
+        "option": "questionMark",
+        "severity": "ERROR"
       }
     },
     {
       "type": "VariableInitialisation",
       "props": {
-          "severity": "ERROR",
-          "allowFinal": true
+        "severity": "ERROR",
+        "allowFinal": true
       }
     },
     {
       "type": "ParameterNumber",
       "props": {
-          "severity": "WARNING",
-          "max": 4,
-          "ignoreOverriddenMethods": false
+        "severity": "WARNING",
+        "max": 4,
+        "ignoreOverriddenMethods": false
       }
-  }
+    },
+    {
+      "type": "Final",
+      "props": {
+        "severity": "INFO"
+      }
+    }
   ]
 }
