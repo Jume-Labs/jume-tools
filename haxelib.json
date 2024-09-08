@@ -9,6 +9,6 @@
   "url": "https://github.com/jume-labs/jume-tools",
   "dependencies": {
     "format": "3.6.0",
-    "haxetoml": "git:git@github.com:codescapade/haxetoml.git"
+    "haxetoml": "git:https://github.com/codescapade/haxetoml.git"
   }
 }

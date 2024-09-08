@@ -21,7 +21,7 @@ jobs:
         haxelib install formatter
         haxelib install checkstyle
         haxelib install format 3.6.0
-        haxelib git haxetoml git@github.com:codescapade/haxetoml.git
+        haxelib git haxetoml https://github.com/codescapade/haxetoml.git
 
     - name: Formatting
       run: haxelib run formatter -s src -s tests --check
