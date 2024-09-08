@@ -21,6 +21,7 @@ jobs:
         haxelib install formatter
         haxelib install checkstyle
         haxelib install format 3.6.0
+        haxelib install utest 1.13.2
         haxelib git haxetoml https://github.com/codescapade/haxetoml.git
 
     - name: Formatting
