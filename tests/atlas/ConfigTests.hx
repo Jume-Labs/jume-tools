@@ -18,7 +18,7 @@ class ConfigTests extends Test {
     };
     setDefaultConfigValues(data);
 
-    Assert.equals(1, config.folders.length);
+    Assert.equals(0, config.folders.length);
     Assert.equals(0, config.files.length);
     Assert.isTrue(config.trimmed);
     Assert.equals(1, config.extrude);
