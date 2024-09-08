@@ -49,7 +49,7 @@ class Atlas {
   /**
    * Used to don't pack if the constructor found issues.
    */
-  var errorFound = false;
+  var errorFound: Bool;
 
   /**
    * Create an atlas from a toml file.
