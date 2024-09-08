@@ -1,2 +1,2 @@
 #!/bin/sh
-haxelib run jume "$@"
+haxelib run jume-tools "$@"

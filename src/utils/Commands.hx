@@ -1,12 +1,8 @@
 package utils;
 
-import haxe.Timer;
-
-import utils.Utils.copyDir;
-import utils.Utils.deleteDir;
-
 import atlas.Atlas;
 
+import haxe.Timer;
 import haxe.io.Path;
 
 import shaders.Transpiler.ShaderExtension;
@@ -15,6 +11,8 @@ import shaders.Transpiler.transpileShader;
 import sys.FileSystem;
 import sys.io.File;
 
+import utils.Utils.copyDir;
+import utils.Utils.deleteDir;
 import utils.Utils.getHaxelibPath;
 
 using StringTools;
@@ -113,7 +111,6 @@ function generateAtlas(?path: String) {
  */
 function copyShaders(config: Config, outputFolder: String) {
   Sys.println('Copying shaders...');
-  final jumePath = getHaxelibPath('jume');
 
   final shaderFolders = [];
   if (config.shaderFolder != null) {
@@ -174,7 +171,7 @@ function createProject(path: String, name: String): String {
     return null;
   }
 
-  final jumePath = getHaxelibPath('jume');
+  final jumePath = getHaxelibPath('jume-tools');
 
   final templatePath = Path.join([jumePath, '../tools/data/templates/starter']);
   FileSystem.createDirectory(projectFolder);
@@ -244,7 +241,7 @@ function setupAlias(): Bool {
     }
 
     final destination = Path.join([haxePath, 'jume.bat']);
-    final source = Path.join([getHaxelibPath('jume'), '../tools/data/bin/jume.bat']);
+    final source = Path.join([getHaxelibPath('jume-tools'), '../data/bin/jume.bat']);
 
     if (FileSystem.exists(source)) {
       File.copy(source, destination);
@@ -252,7 +249,7 @@ function setupAlias(): Bool {
       throw 'Could not find the aeons alias script.';
     }
   } else {
-    final source = Path.join([getHaxelibPath('jume'), '../tools/data/bin/jume.sh']);
+    final source = Path.join([getHaxelibPath('jume-tools'), '../data/bin/jume.sh']);
     if (FileSystem.exists(source)) {
       Sys.command('sudo', ['cp', source, binPath + '/jume']);
       Sys.command('sudo', ['chmod', '+x', binPath + '/jume']);
@@ -357,8 +354,8 @@ function copyTemplate(config: Config, outFolder: String) {
   if (config.html5 != null && config.html5.indexPath != null) {
     templatePath = config.html5.indexPath;
   } else {
-    final jumePath = getHaxelibPath('jume');
-    templatePath = Path.join([jumePath, '../tools/data/html/index.html']);
+    final jumePath = getHaxelibPath('jume-tools');
+    templatePath = Path.join([jumePath, '../data/html/index.html']);
   }
   var template = File.getContent(templatePath);
 

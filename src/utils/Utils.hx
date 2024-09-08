@@ -1,15 +1,13 @@
 package utils;
 
 import haxe.Json;
-
-import sys.io.Process;
-
 import haxe.io.Path;
 
 import haxetoml.TomlParser;
 
-import sys.io.File;
 import sys.FileSystem;
+import sys.io.File;
+import sys.io.Process;
 
 using StringTools;
 

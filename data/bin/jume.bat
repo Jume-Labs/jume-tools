@@ -1,2 +1,2 @@
 @echo off
-haxelib run jume %*
+haxelib run jume-tools %*
