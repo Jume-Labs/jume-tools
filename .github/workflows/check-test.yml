@@ -20,7 +20,8 @@ jobs:
         haxelib setup /home/runner/haxe/haxelib/
         haxelib install formatter
         haxelib install checkstyle
-        haxelib dev jume-tools .
+        haxelib install format 3.6.0
+        haxelib git haxetoml git@github.com:codescapade/haxetoml#2fbd78a
 
     - name: Formatting
       run: haxelib run formatter -s src -s tests --check
