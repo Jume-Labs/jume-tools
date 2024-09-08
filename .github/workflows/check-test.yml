@@ -22,11 +22,11 @@ jobs:
         haxelib install checkstyle
         haxelib dev jume-tools .
 
-    - name: Linting
-      run: haxelib run checkstyle -s src -s tests --exitcode
-
     - name: Formatting
       run: haxelib run formatter -s src -s tests --check
+
+    - name: Linting
+      run: haxelib run checkstyle -s src -s tests --exitcode
 
     - name: Tests
       run: haxe hxml/test.hxml
