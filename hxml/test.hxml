@@ -1,6 +1,6 @@
--lib format:3.6.0
--lib haxetoml:git:https://github.com/codescapade/haxetoml.git
--lib utest:1.13.2
+-L format:3.6.0
+-L haxetoml:git:https://github.com/codescapade/haxetoml.git
+-L utest:1.13.2
 
 -cp src
 -cp tests
