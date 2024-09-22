@@ -1,5 +1,7 @@
 package utils;
 
+import utils.Config.validateConfig;
+
 import haxe.Json;
 import haxe.io.Path;
 
@@ -39,6 +41,8 @@ function readConfig(path: String): Config {
   if (FileSystem.exists(path)) {
     final content = File.getContent(path);
     final config: Config = TomlParser.parseString(content, {});
+
+    validateConfig(config);
 
     return config;
   }

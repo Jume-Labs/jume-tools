@@ -1,5 +1,7 @@
 package utils;
 
+import haxe.Exception;
+
 import atlas.Atlas;
 
 import haxe.Timer;
@@ -63,7 +65,7 @@ function build(config: Config, options: BuildOptions, buildStart: Float) {
   }
 
   Sys.println('Compiling haxe...');
-  runCommand('hxml', 'haxe', ['html5.hxml']);
+  runCommand('hxml', 'haxe', ['build.hxml']);
 
   final buildTime = Timer.stamp() - buildStart;
   Sys.println('Export completed in ${Math.floor(buildTime * 100) / 100.0} seconds.');
@@ -75,7 +77,7 @@ function build(config: Config, options: BuildOptions, buildStart: Float) {
  * @param outputFolder 
  */
 function copyAssets(config: Config, outputFolder: String) {
-  final folder = getAssetsFolder(config);
+  final folder = config.assetsFolder;
   if (FileSystem.exists(folder)) {
     final output = Path.join([outputFolder, folder]);
     if (!FileSystem.exists(output)) {
@@ -112,31 +114,26 @@ function generateAtlas(?path: String) {
 function copyShaders(config: Config, outputFolder: String) {
   Sys.println('Copying shaders...');
 
-  final shaderFolders = [];
-  if (config.shaderFolder != null) {
-    shaderFolders.push(config.shaderFolder);
-  }
-
-  if (shaderFolders.length == 0) {
+  final shaderFolder = config.shaderFolder;
+  if (!FileSystem.exists(shaderFolder)) {
+    Sys.println('Shader folder not found.');
     return;
   }
 
   outputFolder = Path.join([outputFolder, 'shaders']);
   FileSystem.createDirectory(outputFolder);
 
-  for (folder in shaderFolders) {
-    final shaderFiles = FileSystem.readDirectory(folder);
-    for (shader in shaderFiles) {
-      final extension = Path.extension(shader);
-      if (extension == ShaderExtension.VERTEX || extension == ShaderExtension.FRAGMENT) {
-        final content = File.getContent(Path.join([folder, shader]));
-        File.saveContent(Path.join([outputFolder, shader]), content);
+  final shaderFiles = FileSystem.readDirectory(shaderFolder);
+  for (shader in shaderFiles) {
+    final extension = Path.extension(shader);
+    if (extension == ShaderExtension.VERTEX || extension == ShaderExtension.FRAGMENT) {
+      final content = File.getContent(Path.join([shaderFolder, shader]));
+      File.saveContent(Path.join([outputFolder, shader]), content);
 
-        // Convert the WebGL2 shader to WebGL1 for older browsers.
-        final gl1 = transpileShader(content, extension);
-        final gl1Name = '${Path.withoutExtension(shader)}.gl1.${extension}';
-        File.saveContent(Path.join([outputFolder, gl1Name]), gl1);
-      }
+      // Convert the WebGL2 shader to WebGL1 for older browsers.
+      final gl1 = transpileShader(content, extension);
+      final gl1Name = '${Path.withoutExtension(shader)}.gl1.${extension}';
+      File.saveContent(Path.join([outputFolder, gl1Name]), gl1);
     }
   }
 }
@@ -146,13 +143,8 @@ function copyShaders(config: Config, outputFolder: String) {
  * @param config 
  */
 function cleanOutputDir(config: Config) {
-  var dir = 'export';
-  if (config.outDir != null) {
-    dir = config.outDir;
-  }
-
   Sys.println('Cleaning export folder...');
-  deleteDir(dir);
+  deleteDir(config.outDir);
 }
 
 /**
@@ -173,7 +165,7 @@ function createProject(path: String, name: String): String {
 
   final jumePath = getHaxelibPath('jume-tools');
 
-  final templatePath = Path.join([jumePath, '../tools/data/templates/starter']);
+  final templatePath = Path.join([jumePath, '../data/templates/starter']);
   FileSystem.createDirectory(projectFolder);
 
   // Copy the template files.
@@ -246,7 +238,7 @@ function setupAlias(): Bool {
     if (FileSystem.exists(source)) {
       File.copy(source, destination);
     } else {
-      throw 'Could not find the aeons alias script.';
+      throw new Exception('Could not find the aeons alias script.');
     }
   } else {
     final source = Path.join([getHaxelibPath('jume-tools'), '../data/bin/jume.sh']);
@@ -254,7 +246,7 @@ function setupAlias(): Bool {
       Sys.command('sudo', ['cp', source, binPath + '/jume']);
       Sys.command('sudo', ['chmod', '+x', binPath + '/jume']);
     } else {
-      throw 'Could not find the jume alias script.';
+      throw new Exception('Could not find the jume alias script.');
     }
   }
   Sys.println('The "jume" command has been added to path.');
@@ -290,10 +282,6 @@ function generateHxml(config: Config, outputFolder: String) {
     fileData = '--library jume\n' + fileData;
   }
 
-  if (config.sourceFolders == null) {
-    config.sourceFolders = ['src'];
-  }
-
   for (folder in config.sourceFolders) {
     final path = Path.join([Sys.getCwd(), folder]);
     if (FileSystem.exists(path)) {
@@ -323,23 +311,18 @@ function generateHxml(config: Config, outputFolder: String) {
     fileData += '\n';
   }
 
-  var scriptName = 'jume.js';
-  if (config.html5 != null) {
-    if (config.html5.scriptName != null) {
-      scriptName = config.html5.scriptName;
-    }
-  }
+  final scriptName = config.scriptName ?? 'jume.js';
+
   fileData += '-js ${Path.join([Sys.getCwd(), outputFolder, scriptName])}\n';
   fileData += '\n';
-
-  final mainClass = config.main != null ? config.main : 'Main';
+  final mainClass = config.main;
   fileData += '-main ${mainClass}\n';
-
   final hxmlPath = 'hxml';
+
   if (!FileSystem.exists(hxmlPath)) {
     FileSystem.createDirectory(hxmlPath);
   }
-  File.saveContent(Path.join([hxmlPath, 'html5.hxml']), fileData);
+  File.saveContent(Path.join([hxmlPath, 'build.hxml']), fileData);
 }
 
 /**
@@ -351,15 +334,15 @@ function copyTemplate(config: Config, outFolder: String) {
   Sys.println('Copying export template...');
 
   var templatePath: String;
-  if (config.html5 != null && config.html5.indexPath != null) {
-    templatePath = config.html5.indexPath;
+  if (config.indexPath != null) {
+    templatePath = config.indexPath;
   } else {
     final jumePath = getHaxelibPath('jume-tools');
     templatePath = Path.join([jumePath, '../data/html/index.html']);
   }
   var template = File.getContent(templatePath);
 
-  final scriptName = config.html5 != null && config.html5.scriptName != null ? config.html5.scriptName : 'jume.js';
+  final scriptName = config.scriptName ?? 'jume.js';
   template = setPlaceholder(template, 'script_name', scriptName);
 
   File.saveContent(Path.join([outFolder, 'index.html']), template);
@@ -371,15 +354,7 @@ function copyTemplate(config: Config, outFolder: String) {
  * @return String
  */
 function getOutputFolder(config: Config): String {
-  // Default export location.
-  var output = 'export';
-
-  // Custom export location.
-  if (config.outDir != null) {
-    output = config.outDir;
-  }
-
-  return output;
+  return config.outDir;
 }
 
 /**
@@ -391,21 +366,6 @@ function getOutputFolder(config: Config): String {
  */
 private function setPlaceholder(content: String, placeholder: String, replacement: String): String {
   return content.replace('{{ ${placeholder} }}', replacement);
-}
-
-/**
- * Get the assets folder location.
- * @param config 
- * @return String
- */
-private function getAssetsFolder(config: Config): String {
-  var assetFolder = 'assets';
-
-  if (config.assetsFolder != null) {
-    assetFolder = config.assetsFolder;
-  }
-
-  return assetFolder;
 }
 
 /**

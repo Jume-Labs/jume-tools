@@ -1,0 +1,12 @@
+
+assetsFolder = "assets"
+
+shaderFolder = "shaders"
+
+sourceFolders = ["src"]
+
+main = "Main"
+
+outDir = "export"
+
+debug = true

@@ -1,32 +1,34 @@
 package utils;
 
+import haxe.Exception;
+
 import atlas.AtlasConfig;
 
 typedef Config = {
   /**
-   * The game name. Will show in the title.
+   * Asset folder locations.
    */
-  var name: String;
+  var assetsFolder: String;
 
   /**
-   * Debug mode.
+   * Shader folder location when you use custom shaders.
    */
-  var debug: Bool;
+  var shaderFolder: String;
 
   /**
-   * Optional asset folder locations Default is 'assets'.
+   * Source folder locations.
    */
-  var ?assetsFolder: String;
+  var sourceFolders: Array<String>;
 
   /**
-   * Optional shader folder location when you use custom shaders.
+   * Custom main class. default is 'Main'.
    */
-  var ?shaderFolder: String;
+  var main: String;
 
   /**
-   * Optional source folder locations. Default = 'src'.
+   * Export path.
    */
-  var ?sourceFolders: Array<String>;
+  var outDir: String;
 
   /**
    * Haxelib libraries used.
@@ -44,31 +46,53 @@ typedef Config = {
   var ?parameters: Array<String>;
 
   /**
-   * Optional custom main class. default is 'Main'.
+   * Custom output script name. Default is 'jume.js'.
    */
-  var ?main: String;
+  var ?scriptName: String;
 
   /**
-   * Html specific settings.
+   * Path to custom index.html file.
    */
-  var ?html5: {
-    /**
-     * Custom output script name. Default is 'jume.js'.
-     */
-    ?scriptName: String,
-    /**
-     * Path to custom index.html file.
-     */
-    ?indexPath: String
-  };
+  var ?indexPath: String;
 
   /**
-   * Export path. Default is 'export'.
+   * Debug mode.
    */
-  var ?outDir: String;
+  var ?debug: Bool;
 
   /**
    * Sprite atlas config.
    */
   var ?atlases: Array<AtlasConfig>;
+}
+
+function validateConfig(config: Config) {
+  Sys.println('validating config...');
+  trace(config);
+  if (config.assetsFolder == null) {
+    throwMissingField('assetsFolder');
+  }
+
+  if (config.shaderFolder == null) {
+    throwMissingField('shaderFolder');
+  }
+
+  if (config.sourceFolders == null) {
+    throwMissingField('sourceFolders');
+  }
+
+  if (config.main == null) {
+    throwMissingField('main');
+  }
+
+  if (config.outDir == null) {
+    throwMissingField('outDir');
+  }
+
+  config.debug ??= false;
+}
+
+private function throwMissingField(field: String) {
+  trace('throw ${field}');
+  throw new Exception('Missing "${field}" field in config file.');
 }
