@@ -65,7 +65,7 @@ function build(config: Config, options: BuildOptions, buildStart: Float) {
   }
 
   Sys.println('Compiling haxe...');
-  runCommand('hxml', 'haxe', ['build.hxml']);
+  runCommand('', 'haxe', ['build.hxml']);
 
   final buildTime = Timer.stamp() - buildStart;
   Sys.println('Export completed in ${Math.floor(buildTime * 100) / 100.0} seconds.');
@@ -283,11 +283,11 @@ function generateHxml(config: Config, outputFolder: String) {
   }
 
   for (folder in config.sourceFolders) {
-    final path = Path.join([Sys.getCwd(), folder]);
-    if (FileSystem.exists(path)) {
-      fileData += '-cp ${path}\n';
+    // final path = Path.join([Sys.getCwd(), folder]);
+    if (FileSystem.exists(folder)) {
+      fileData += '-cp ${folder}\n';
     } else {
-      Sys.println('Path ${path} not found. Not adding it to hxml.');
+      Sys.println('Folder "${folder}" not found. Not adding it to hxml.');
     }
   }
   fileData += '\n';
@@ -313,7 +313,7 @@ function generateHxml(config: Config, outputFolder: String) {
 
   final scriptName = config.scriptName ?? 'jume.js';
 
-  fileData += '-js ${Path.join([Sys.getCwd(), outputFolder, scriptName])}\n';
+  fileData += '-js ${Path.join([outputFolder, scriptName])}\n';
   fileData += '\n';
   final mainClass = config.main;
   fileData += '-main ${mainClass}\n';
@@ -322,7 +322,7 @@ function generateHxml(config: Config, outputFolder: String) {
   if (!FileSystem.exists(hxmlPath)) {
     FileSystem.createDirectory(hxmlPath);
   }
-  File.saveContent(Path.join([hxmlPath, 'build.hxml']), fileData);
+  File.saveContent('build.hxml', fileData);
 }
 
 /**

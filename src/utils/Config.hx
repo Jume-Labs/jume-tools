@@ -68,7 +68,6 @@ typedef Config = {
 
 function validateConfig(config: Config) {
   Sys.println('validating config...');
-  trace(config);
   if (config.assetsFolder == null) {
     throwMissingField('assetsFolder');
   }
@@ -93,6 +92,5 @@ function validateConfig(config: Config) {
 }
 
 private function throwMissingField(field: String) {
-  trace('throw ${field}');
   throw new Exception('Missing "${field}" field in config file.');
 }

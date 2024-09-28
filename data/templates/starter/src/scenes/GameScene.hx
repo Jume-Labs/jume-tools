@@ -13,9 +13,7 @@ class GameScene extends Scene {
   @:inject
   var view: View;
 
-  public function new() {
-    super();
-
+  public override function init() {
     addSystem(SUpdate).init();
     addSystem(SRender).init();
 
