@@ -317,11 +317,6 @@ function generateHxml(config: Config, outputFolder: String) {
   fileData += '\n';
   final mainClass = config.main;
   fileData += '-main ${mainClass}\n';
-  final hxmlPath = 'hxml';
-
-  if (!FileSystem.exists(hxmlPath)) {
-    FileSystem.createDirectory(hxmlPath);
-  }
   File.saveContent('build.hxml', fileData);
 }
 
