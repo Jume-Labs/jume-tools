@@ -1,6 +1,6 @@
 {
   "haxe.configurations": [
-    ["hxml/build.hxml"],
+    ["build.hxml"],
   ],
   "liveServer.settings.root": "/export"
 }
