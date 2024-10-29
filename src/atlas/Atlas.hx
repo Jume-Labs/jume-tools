@@ -61,13 +61,13 @@ class Atlas {
     Sys.setCwd(Path.directory(path));
 
     final atlasList: AtlasList = TomlParser.parseString(tomlString, {});
-    if (atlasList.atlases == null) {
+    if (atlasList.atlas == null) {
       Sys.println('no atlas found');
       return;
     }
     setDefaultConfigValues(atlasList);
     // Create the atlases for each config in the file.
-    for (config in atlasList.atlases) {
+    for (config in atlasList.atlas) {
       final atlas = new Atlas(config);
 
       if (!atlas.pack()) {

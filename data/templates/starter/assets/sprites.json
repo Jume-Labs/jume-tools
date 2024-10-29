@@ -1,0 +1,151 @@
+{
+  "frames": [
+    {
+      "rotated": false,
+      "sourceSize": {
+        "h": 294,
+        "w": 399
+      },
+      "frame": {
+        "h": 294,
+        "x": 1,
+        "y": 1,
+        "w": 399
+      },
+      "trimmed": true,
+      "spriteSourceSize": {
+        "h": 294,
+        "x": 0,
+        "y": 0,
+        "w": 399
+      },
+      "filename": "background"
+    },
+    {
+      "rotated": false,
+      "sourceSize": {
+        "h": 21,
+        "w": 21
+      },
+      "frame": {
+        "h": 21,
+        "x": 402,
+        "y": 1,
+        "w": 17
+      },
+      "trimmed": true,
+      "spriteSourceSize": {
+        "h": 21,
+        "x": 2,
+        "y": 0,
+        "w": 21
+      },
+      "filename": "player_idle"
+    },
+    {
+      "rotated": false,
+      "sourceSize": {
+        "h": 21,
+        "w": 21
+      },
+      "frame": {
+        "h": 21,
+        "x": 402,
+        "y": 24,
+        "w": 18
+      },
+      "trimmed": true,
+      "spriteSourceSize": {
+        "h": 21,
+        "x": 1,
+        "y": 0,
+        "w": 21
+      },
+      "filename": "player_jump"
+    },
+    {
+      "rotated": false,
+      "sourceSize": {
+        "h": 21,
+        "w": 21
+      },
+      "frame": {
+        "h": 21,
+        "x": 402,
+        "y": 47,
+        "w": 17
+      },
+      "trimmed": true,
+      "spriteSourceSize": {
+        "h": 21,
+        "x": 2,
+        "y": 0,
+        "w": 21
+      },
+      "filename": "player_fall"
+    },
+    {
+      "rotated": false,
+      "sourceSize": {
+        "h": 21,
+        "w": 21
+      },
+      "frame": {
+        "h": 10,
+        "x": 402,
+        "y": 70,
+        "w": 13
+      },
+      "trimmed": true,
+      "spriteSourceSize": {
+        "h": 21,
+        "x": 4,
+        "y": 10,
+        "w": 21
+      },
+      "filename": "blob_01"
+    },
+    {
+      "rotated": false,
+      "sourceSize": {
+        "h": 21,
+        "w": 21
+      },
+      "frame": {
+        "h": 8,
+        "x": 402,
+        "y": 82,
+        "w": 17
+      },
+      "trimmed": true,
+      "spriteSourceSize": {
+        "h": 21,
+        "x": 2,
+        "y": 12,
+        "w": 21
+      },
+      "filename": "blob_00"
+    },
+    {
+      "rotated": false,
+      "sourceSize": {
+        "h": 21,
+        "w": 21
+      },
+      "frame": {
+        "h": 4,
+        "x": 402,
+        "y": 92,
+        "w": 17
+      },
+      "trimmed": true,
+      "spriteSourceSize": {
+        "h": 21,
+        "x": 2,
+        "y": 16,
+        "w": 21
+      },
+      "filename": "blob_02"
+    }
+  ]
+}

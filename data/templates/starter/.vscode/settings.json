@@ -2,5 +2,6 @@
   "haxe.configurations": [
     ["build.hxml"],
   ],
-  "liveServer.settings.root": "/export"
+  "liveServer.settings.root": "/export",
+  "liveServer.settings.port": 5501
 }

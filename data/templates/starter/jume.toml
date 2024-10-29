@@ -1,12 +1,23 @@
+assetsFolder = "assets" # The folder the art, music levels etc. will be loaded from.
+shaderFolder = "shaders" # The folder to look for custom shaders.
+sourceFolders = ["src"] # source code folder.
+main = "Main" # The main haxe class.
+outDir = "export" # The folder the game will be exported to.
+debug = true # Turn on debug mode when compiling the game.
 
-assetsFolder = "assets"
+[[atlas]] # Sprite atlas generation config.
+name = "sprites" # The file name of the config.
+folders = ["art/sprites"] # The folder to get the images from.
+saveFolder = "assets" # The folder to save the sprite sheet into.
+trimmed = true # Trim transparent edges of the images to save space.
+extrude = 1 # The amount of pixels to extrude at the edges of each image to reduce artifacts.
+packMethod = "optimal" # The packing mode. Optimal tries to make the smallest size image.
 
-shaderFolder = "shaders"
-
-sourceFolders = ["src"]
-
-main = "Main"
-
-outDir = "export"
-
-debug = true
+[[atlas]]
+name = "tiles"
+folders = ["art/tiles"]
+saveFolder = "assets"
+trimmed = false
+extrude = 1
+packMethod = "basic" # Basic packs the images alphabetically.
+noData = true # Only export the image, not the json data file.

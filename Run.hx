@@ -90,6 +90,10 @@ class Run {
           setupAlias();
           Sys.exit(0);
 
+        case 'atlas':
+          generateAtlas();
+          Sys.exit(0);
+
         case 'assets':
           generateAtlas();
           final configPath = getConfigPath(workingDir, args);

@@ -66,7 +66,7 @@ typedef AtlasConfig = {
  * Helper to load the configs from the json file.
  */
 typedef AtlasList = {
-  var atlases: Array<AtlasConfig>;
+  var atlas: Array<AtlasConfig>;
 }
 
 /**
@@ -74,7 +74,7 @@ typedef AtlasList = {
  * @param list All configs.
  */
 function setDefaultConfigValues(list: AtlasList) {
-  for (config in list.atlases) {
+  for (config in list.atlas) {
     if (config.folders == null) {
       config.folders = [];
     }

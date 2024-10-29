@@ -14,7 +14,7 @@ class ConfigTests extends Test {
     };
 
     final data: AtlasList = {
-      atlases: [config]
+      atlas: [config]
     };
     setDefaultConfigValues(data);
 

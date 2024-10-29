@@ -1,0 +1,8 @@
+--library jume
+-cp src
+
+--debug
+
+-js export/jume.js
+
+-main Main
