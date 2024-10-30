@@ -17,20 +17,14 @@ class EPlayer extends Entity {
   @:inject
   var assets: Assets;
 
-  var jumpComp: CJump;
-
   public function init(options: EPlayerOptions): EPlayer {
     addComponent(CTransform).init({ x: options.x, y: options.y });
 
     final atlas = assets.get(Atlas, 'sprites');
     addComponent(CSprite).init({ atlas: atlas, frameName: 'player_idle', anchor: { x: 0, y: 0 } });
 
-    jumpComp = addComponent(CJump).init();
+    addComponent(CJump).init();
 
     return this;
-  }
-
-  public function jump() {
-    jumpComp.jump();
   }
 }
