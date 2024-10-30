@@ -36,13 +36,13 @@ class GameScene extends Scene {
     addEntity(EBackground).init();
     addEntity(ETilemap).init();
 
-    player = addEntity(EPlayer).init({ x: 90, y: 252 });
+    player = addEntity(EPlayer).init({ x: 90, y: 253 });
 
     addEntity(EBlob).init({
       x: 300,
-      y: 179,
-      leftEdge: 259,
-      rightEdge: 350
+      y: 184,
+      leftEdge: 248,
+      rightEdge: 352
     });
 
     addEntity(EJumpText).init();

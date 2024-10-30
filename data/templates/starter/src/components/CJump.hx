@@ -27,7 +27,7 @@ class CJump extends Component {
     canJump = true;
 
     final downY = transform.position.y;
-    final upY = transform.position.y - 100;
+    final upY = transform.position.y - 70;
 
     var upTween = new Tween({
       target: transform.position,

@@ -14,8 +14,8 @@ class LoadScene extends Scene {
 
   public override function init() {
     final tilesetOptions: LoadTilesetOptions = {
-      tileWidth: 21,
-      tileHeight: 21,
+      tileWidth: 20,
+      tileHeight: 20,
       margin: 1,
       spacing: 2
     };
@@ -28,7 +28,7 @@ class LoadScene extends Scene {
         options: tilesetOptions
       },
       { type: Atlas, id: 'sprites', path: 'assets/sprites' },
-      { type: BitmapFont, id: 'kenney_pixel_36', path: 'assets/kenney_pixel_36' }
+      { type: BitmapFont, id: 'kenney_pixel', path: 'assets/kenney_pixel_32' }
     ];
 
     assets.loadAll(assetList, assetsLoaded);

@@ -15,10 +15,13 @@ class EJumpText extends Entity {
   var view: View;
 
   public function init(): EJumpText {
-    addComponent(CTransform).init({ x: view.viewCenterX, y: 80 });
+    addComponent(CTransform).init({
+      x: view.viewCenterX,
+      y: 84
+    });
 
-    final font = assets.get(BitmapFont, 'kenney_pixel_36');
-    addComponent(CText).init({ font: font, text: 'Press Space to Jump' });
+    final font = assets.get(BitmapFont, 'kenney_pixel');
+    addComponent(CText).init({ font: font, text: 'press space to jump', anchor: { x: 0.5, y: 0 } });
 
     return this;
   }
